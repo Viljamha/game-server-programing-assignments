@@ -1,0 +1,14 @@
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\bin\Debug\netcoreapp2.1\web-api.deps.json
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\bin\Debug\netcoreapp2.1\web-api.runtimeconfig.json
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\bin\Debug\netcoreapp2.1\web-api.runtimeconfig.dev.json
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\bin\Debug\netcoreapp2.1\web-api.dll
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\bin\Debug\netcoreapp2.1\web-api.pdb
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\obj\Debug\netcoreapp2.1\web-api.csprojAssemblyReference.cache
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\obj\Debug\netcoreapp2.1\web-api.csproj.CoreCompileInputs.cache
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\obj\Debug\netcoreapp2.1\web-api.RazorAssemblyInfo.cache
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\obj\Debug\netcoreapp2.1\web-api.RazorAssemblyInfo.cs
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\obj\Debug\netcoreapp2.1\web-api.AssemblyInfoInputs.cache
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\obj\Debug\netcoreapp2.1\web-api.AssemblyInfo.cs
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\obj\Debug\netcoreapp2.1\web-api.RazorTargetAssemblyInfo.cache
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\obj\Debug\netcoreapp2.1\web-api.dll
+C:\Users\Viljami\Documents\C# Projects\game-server-programming-course\web-api\obj\Debug\netcoreapp2.1\web-api.pdb
