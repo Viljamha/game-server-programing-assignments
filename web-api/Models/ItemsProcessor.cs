@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using System;
 using web_api.Exceptions;
 using web_api.Repositories;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace web_api.Models
 {

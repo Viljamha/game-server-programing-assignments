@@ -1,11 +1,15 @@
 using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace web_api.Exceptions
 {
     [Serializable()]
-    public class ForbiddenItemType : System.Exception
+    public class ForbiddenItemType : Exception
     {
         public ForbiddenItemType() : base() { }
         public ForbiddenItemType(string message) : base(message) { }
@@ -16,11 +20,35 @@ namespace web_api.Exceptions
         protected ForbiddenItemType(System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context) { }
     }
-    
-    public class LevelFilter : ExceptionFilterAttribute {
+
+    public class ForbiddenItemTypeResult : ObjectResult
+    {
+        public ForbiddenItemTypeResult() : base(null)
+        {
+        }
+
+        public ForbiddenItemTypeResult(object value) : base(value)
+        {
+        }
+
+        public override Task ExecuteResultAsync(ActionContext context) {
+            var response = context.HttpContext.Response;
+            response.StatusCode = StatusCode ?? 400;
+            return Task.CompletedTask;
+        }
+    }
+
+    public class LevelFilterAttribute : ExceptionFilterAttribute {
         public override void OnException(ExceptionContext context) 
         {
-            if (context.ExceptionHandled)
+
+            if (context.Exception is ForbiddenItemType) {
+                var result = new ContentResult();
+                result.StatusCode = 400;
+                result.Content = context.Exception.Message;
+                context.Result = result;
+            }
+            /*if (context.ExceptionHandled)
                 return;
 
             if (context.Exception is ForbiddenItemType)
@@ -29,7 +57,7 @@ namespace web_api.Exceptions
                 var viewResult = new ViewResult();
                 viewResult.ViewData["ForbiddenItemType"] = context.Exception.Message;
                 context.Result = viewResult;
-            }
+            }*/
         }
     }
 }

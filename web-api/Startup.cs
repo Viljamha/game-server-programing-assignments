@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using web_api.Exceptions;
 
 namespace web_api
 {
@@ -30,7 +31,12 @@ namespace web_api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<PlayersProcessor>();
             services.AddTransient<ItemsProcessor>();
-            services.AddSingleton<IRepository, InMemoryRepository>();
+            services.AddSingleton<IRepository, MongoDbRepository>();
+            
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new LevelFilterAttribute()); // an instance
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +51,9 @@ namespace web_api
             else
             {
                 app.UseHsts();
+                app.UseExceptionHandler("/error");
             }
+            app.UseStatusCodePages();
             app.UseMvc();
         }
     }
