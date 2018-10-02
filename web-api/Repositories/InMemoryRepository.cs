@@ -65,5 +65,39 @@ namespace web_api.Repositories
             plr.Items.Remove(itm);
             return Task.FromResult(itm);
         }
+
+        public Task<Player[]> GetPlayersWithGteScore(int score)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Player> GetPlayerByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Player[]> GetPlayersByTag(PlayerTags tag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> GetMostCommonLevel()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Player[]> GetPlayersWithItemCount(int itemCount)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<Player[]> GetPlayersWithItemType(ItemTypes type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Player[]> GetAllPlayersDescending()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

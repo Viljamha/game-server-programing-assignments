@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace web_api.Models
-{
+{   
     public class Player
     {
         public Player() {
@@ -15,6 +15,7 @@ namespace web_api.Models
         public int Score { get; set; }
         [Range(1, 99)]
         public int Level {get; set;}
+        public PlayerTags Tag {get; set;}
         public bool IsBanned { get; set; }
         public DateTime CreationTime { get; set; }
         public List<Item> Items {get; set; }

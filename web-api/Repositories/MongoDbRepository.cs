@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Collections.Generic;
 using web_api.Models;
+using MongoDB.Bson.Serialization;
 
 namespace web_api.Repositories
 {
@@ -98,6 +100,66 @@ namespace web_api.Repositories
             plr.Level = player.Level;
             collection.ReplaceOneAsync(filter, plr);
             return Task.FromResult(plr);
+        }
+
+        public Task<Player[]> GetPlayersWithGteScore(int score)
+        {
+            var builder = Builders<Player>.Filter;
+            var filter = builder.Gte("Score", score);
+            List<Player> players = collection.Find(filter).ToListAsync().Result;
+            return Task.FromResult(players.ToArray());
+        }
+
+        public Task<Player> GetPlayerByName(string name)
+        {
+            FilterDefinition<Player> filter = Builders<Player>.Filter.Eq("Name", name);
+            return collection.Find(filter).FirstAsync();
+        }
+
+        public Task<Player[]> GetPlayersByTag(PlayerTags tag)
+        {
+            var builder = Builders<Player>.Filter;
+            var filter = builder.Eq("Tag", tag);
+            List<Player> players = collection.Find(filter).ToListAsync().Result;
+            return Task.FromResult(players.ToArray());
+        }
+
+        public Task<int> GetMostCommonLevel()
+        {
+            var aggregate = collection.Aggregate()
+                .Project(r => new {Level = r.Level})
+                .Group(r => r.Level, x => new {Level = x.Key, Count = x.Sum(o=>1)})
+                .SortByDescending(r => r.Count)
+                .Limit(3);
+            var results = aggregate.ToList();
+
+            return Task.FromResult(results[0].Level);
+        }
+
+        public Task<Player[]> GetPlayersWithItemCount(int itemCount)
+        {
+            var builder = Builders<Player>.Filter;
+            var filter = builder.Size("Items", itemCount);
+            List<Player> players = collection.Find(filter).ToListAsync().Result;
+            return Task.FromResult(players.ToArray());
+        }
+
+        public Task<Player[]> GetPlayersWithItemType(ItemTypes type)
+        {
+            var builder = Builders<Player>.Filter;
+            var filter = builder.Eq("Items", new BsonDocument{ {"Type", type} });
+            List<Player> players = collection.Find(filter).ToListAsync().Result;
+            return Task.FromResult(players.ToArray());
+        }
+
+        public Task<Player[]> GetAllPlayersDescending() {
+            var filter = Builders<Player>.Filter.Empty;
+            var sort = Builders<Player>.Sort.Descending("Score");
+
+            var cursor = collection.Find(filter).Sort(sort);
+            var players = cursor.ToList().Take(10);
+
+            return Task.FromResult(players.ToArray());
         }
     }
 }

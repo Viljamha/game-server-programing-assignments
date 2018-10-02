@@ -17,5 +17,13 @@ namespace web_api.Repositories
         Task<Item> CreateItem(Guid playerId, Item item);
         Task<Item> ModifyItem(Guid playerId, Guid itemId, ModifiedItem item);
         Task<Item> DeleteItem(Guid playerId, Guid itemId);
+
+        Task<Player[]> GetPlayersWithGteScore(int score);
+        Task<Player> GetPlayerByName(string name);
+        Task<Player[]> GetPlayersByTag(PlayerTags tag);
+        Task<int> GetMostCommonLevel();
+        Task<Player[]> GetPlayersWithItemType(ItemTypes type);
+        Task<Player[]> GetPlayersWithItemCount(int itemCount);
+        Task<Player[]> GetAllPlayersDescending();
     }
 }

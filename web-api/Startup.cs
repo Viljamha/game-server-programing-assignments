@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using web_api.Models;
 using web_api.Repositories;
+using web_api.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +29,7 @@ namespace web_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AuthenticationKey>(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<PlayersProcessor>();
             services.AddTransient<ItemsProcessor>();
@@ -42,6 +44,7 @@ namespace web_api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseMiddleware<AuthenticationMiddleware>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -50,7 +53,7 @@ namespace web_api
             }
             else
             {
-                app.UseHsts();
+                //app.UseHsts();
                 app.UseExceptionHandler("/error");
             }
             app.UseStatusCodePages();

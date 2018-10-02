@@ -23,6 +23,8 @@ namespace web_api.Models
                 Id = Guid.NewGuid(),
                 Name = newPlayer.Name,
                 Level = newPlayer.Level,
+                Tag = newPlayer.Tag,
+                Score = newPlayer.Score,
                 CreationTime = DateTime.Now
             };
             Task<Player> player = repository.CreatePlayer(plr);
@@ -33,6 +35,34 @@ namespace web_api.Models
         }
         public Task<Player> DeletePlayer(Guid id) {
             return repository.DeletePlayer(id);
+        }
+
+        public Task<Player[]> GetPlayersWithGteScore(int score) {
+            return repository.GetPlayersWithGteScore(score);
+        }
+
+        public Task<Player> GetPlayerByName(string name) {
+            return repository.GetPlayerByName(name);
+        }
+
+        public Task<Player[]> GetPlayersByTag(PlayerTags tag) {
+            return repository.GetPlayersByTag(tag);
+        }
+
+        public Task<int> GetMostCommonLevel() {
+            return repository.GetMostCommonLevel();
+        }
+
+        public Task<Player[]> GetPlayersWithItemCount(int itemCount) {
+            return repository.GetPlayersWithItemCount(itemCount);
+        }
+
+        public Task<Player[]> GetPlayersWithItemType(ItemTypes type) {
+            return repository.GetPlayersWithItemType(type);
+        }
+        
+        public Task<Player[]> GetAllPlayersDescending() {
+            return repository.GetAllPlayersDescending();
         }
     }
 }
