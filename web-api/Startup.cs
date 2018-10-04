@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using web_api.Exceptions;
+using web_api.Filters;
 
 namespace web_api
 {
@@ -33,7 +34,10 @@ namespace web_api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<PlayersProcessor>();
             services.AddTransient<ItemsProcessor>();
+            services.AddTransient<LogsProcessor>();
             services.AddSingleton<IRepository, MongoDbRepository>();
+
+            services.AddScoped<AuditActionFilter>();
             
             services.AddMvc(options =>
             {

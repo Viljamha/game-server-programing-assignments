@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using web_api.Filters;
 
 namespace web_api.Models
 {
@@ -90,6 +91,7 @@ namespace web_api.Models
             return playersProcessor.ModifyPlayer(playerId, modPlayer);
         }
 
+        [ServiceFilter(typeof(AuditActionFilter))]
         [HttpDelete]
         [Route("{playerId}")]
         public Task<Player> Delete(Guid playerId)

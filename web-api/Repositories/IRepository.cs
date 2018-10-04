@@ -25,5 +25,9 @@ namespace web_api.Repositories
         Task<Player[]> GetPlayersWithItemType(ItemTypes type);
         Task<Player[]> GetPlayersWithItemCount(int itemCount);
         Task<Player[]> GetAllPlayersDescending();
+
+        Task<Log> LogRequestStart (string ip, DateTime date);
+        Task<Log> LogRequestFinished (string ip, DateTime date);
+        Task<Log[]> GetAllLogs ();
     }
 }

@@ -12,6 +12,7 @@ namespace web_api.Repositories
     public class MongoDbRepository : IRepository
     {
         private readonly IMongoCollection<Player> collection;
+        private readonly IMongoCollection<Log> auditLog;
         private readonly IMongoCollection<BsonDocument> bsonDocumentCollection;
 
         public MongoDbRepository()
@@ -19,6 +20,7 @@ namespace web_api.Repositories
             var mongoClient = new MongoClient("mongodb://localhost:27017");
             IMongoDatabase database = mongoClient.GetDatabase("Game");
             collection = database.GetCollection<Player>("players");
+            auditLog = database.GetCollection<Log>("log");
             bsonDocumentCollection = database.GetCollection<BsonDocument>("players");
         }
 
@@ -160,6 +162,26 @@ namespace web_api.Repositories
             var players = cursor.ToList().Take(10);
 
             return Task.FromResult(players.ToArray());
+        }
+
+        public Task<Log> LogRequestStart(string ip, DateTime date)
+        {
+            Log newLog = new Log("An request from ip address " + ip + " to delete player started at " + date.ToString());
+            auditLog.InsertOneAsync(newLog);
+            return Task.FromResult(newLog);
+        }
+
+        public Task<Log> LogRequestFinished(string ip, DateTime date)
+        {
+            Log newLog = new Log("An request from ip address " + ip + " to delete player ended at " + date.ToString());
+            auditLog.InsertOneAsync(newLog);
+            return Task.FromResult(newLog);
+        }
+
+        public Task<Log[]> GetAllLogs()
+        {
+            List<Log> logs = auditLog.Find(new BsonDocument()).ToListAsync().Result;
+            return Task.FromResult(logs.ToArray());
         }
     }
 }

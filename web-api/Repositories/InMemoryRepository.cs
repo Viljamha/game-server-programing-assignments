@@ -8,6 +8,7 @@ namespace web_api.Repositories
     public class InMemoryRepository : IRepository
     {
         List<Player> players = new List<Player>();
+        List<Log> auditLog = new List<Log>();
 
         public Task<Player> GetPlayer(Guid playerId) {
             return Task.FromResult(players.Find(x => x.Id == playerId));
@@ -98,6 +99,25 @@ namespace web_api.Repositories
         public Task<Player[]> GetAllPlayersDescending()
         {
             throw new NotImplementedException();
+        }
+
+        public Task<Log> LogRequestStart(string ip, DateTime date)
+        {
+            Log newLog = new Log("An request from ip address " + ip + " to delete player started at " + date.ToString());
+            auditLog.Add(newLog);
+            return Task.FromResult(newLog);
+        }
+
+        public Task<Log> LogRequestFinished(string ip, DateTime date)
+        {
+            Log newLog = new Log("An request from ip address " + ip + " to delete player ended at " + date.ToString());
+            auditLog.Add(newLog);
+            return Task.FromResult(newLog);
+        }
+
+        public Task<Log[]> GetAllLogs()
+        {
+            return Task.FromResult(auditLog.ToArray());
         }
     }
 }
